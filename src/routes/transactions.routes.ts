@@ -36,13 +36,13 @@ transactionsRouter.post('/', async (request, response) => {
     const {title, value, type, category} = request.body;
 
     const createCategory =  new CreateCategoryService();
-    
-    const categoryCreated = await createCategory.execute({
-      title: category,
-    });
 
     const createTransaction =  new CreateTransactionService();
 
+    const categoryCreated = await createCategory.execute({
+      title: category,
+    });
+    
     const transaction = await createTransaction.execute({
       title,
       value,
@@ -52,25 +52,12 @@ transactionsRouter.post('/', async (request, response) => {
 
     return response.json(transaction);
   } catch (err) {
-    return response.status(400).json({error: err.message});
+    return response.status(400).json({status: 'error', message: err.message});
   }
 });
 
 transactionsRouter.delete('/:id', async (request, response) => {
-  // TODO
-  // try {
-  //   const { id } = request.params;
-
-  //   const deleteTransactionService = new DeleteTransactionService();
-
-  //   await deleteTransactionService.execute({
-  //     id
-  //   });
-
-  //   return response.status(204);
-  // } catch (err) {
-  //   return response.status(400).json({error: err.message});
-  // }
+  
 });
 
 transactionsRouter.post('/import', async (request, response) => {

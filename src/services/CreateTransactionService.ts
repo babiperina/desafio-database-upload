@@ -36,7 +36,7 @@ class CreateTransactionService {
       const nTotal = total - value;
       
       if(nTotal < 0){
-        throw Error('You cannot create a transaction to turn your balance negative');
+        throw Error('Outcome invalid');
       }
     }
 
