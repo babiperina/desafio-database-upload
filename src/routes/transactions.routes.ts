@@ -11,13 +11,6 @@ import TransactionsRepository from '../repositories/TransactionsRepository';
 
 const transactionsRouter = Router();
 
-/* 
-
-Responsabilidades da rota:
-
-
-*/
-
 transactionsRouter.get('/', async (request, response) => {
   try {
     const transactionsRepository = getCustomRepository(TransactionsRepository);
@@ -62,7 +55,7 @@ transactionsRouter.delete('/:id', async (request, response) => {
 
     const deleteTransaction = new DeleteTransactionService();
 
-    const transaction = await deleteTransaction.execute({
+    await deleteTransaction.execute({
       id
     });
 
