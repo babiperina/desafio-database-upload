@@ -10,25 +10,24 @@ interface Request {
 class CreateCategoryService {
   public async execute({title}: Request): Promise<Category> {
     const categoryRepository = getRepository(Category);
-
-    const categories = categoryRepository.find({
+    const category = await categoryRepository.findOne({
       where: {
         title,
       }
     });
 
-    if((await categories).length>0){
-      throw Error('Already exists an category with this title');
+    if(!category){
+      const newCategory = await categoryRepository.create({
+          title
+      });
+        
+      await categoryRepository.save(newCategory);
+
+      return newCategory;
+    } else {
+      return category as Category;
     }
-           
-    const category = categoryRepository.create({
-        title
-    });
-    await categoryRepository.save(category);
 
-    console.log(category);
-
-    return category;
   }
 }
 

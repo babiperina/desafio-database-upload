@@ -35,9 +35,7 @@ class TransactionsRepository extends Repository<Transaction> {
       throw Error('An invalid value to balance');
     }
     
-    const balance = {income, outcome, total} as Balance;
-
-    return balance;
+    return {income, outcome, total} ;
   }
 }
 

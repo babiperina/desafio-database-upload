@@ -4,7 +4,7 @@
 a uma tabela do db.
 
 */
-import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, JoinColumn, CreateDateColumn, ManyToOne } from 'typeorm';
 import Category from './Category';
 
 @Entity('transactions')
@@ -25,7 +25,7 @@ class Transaction {
   @Column( { select:false } )
   category_id: string; 
 
-  @OneToOne(() => Category)
+  @ManyToOne(() => Category)
   @JoinColumn( { name: 'category_id' } )
   category: Category;
 
