@@ -11,20 +11,10 @@ interface Request {
 class DeleteTransactionService {
   public async execute({id}: Request): Promise<void> {
       const transactionsRepository = getCustomRepository(TransactionsRepository);
-      try {
-        
-        // const transaction = await transactionsRepository.findOne({
-        //   where:{
-        //     id
-        //   }
-        // })
-
-        
-        const transaction = await transactionsRepository.delete({id});
-        console.log(transaction.raw);
-        
+      try {        
+        await transactionsRepository.delete({id});
       } catch (error) {
-        throw Error('Invalid id transaction');
+        throw Error('This transaction not exists');
       }
   }
 }
