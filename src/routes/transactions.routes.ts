@@ -1,13 +1,17 @@
 import { Router } from 'express';
+import multer from 'multer';
 
-// import TransactionsRepository from '../repositories/TransactionsRepository';
+import { getCustomRepository, TransactionRepository } from 'typeorm';
+
 import CreateTransactionService from '../services/CreateTransactionService';
 import CreateCategoryService from '../services/CreateCategoryService';
-import { getCustomRepository, TransactionRepository } from 'typeorm';
 import DeleteTransactionService from '../services/DeleteTransactionService';
 import TransactionsRepository from '../repositories/TransactionsRepository';
-// import DeleteTransactionService from '../services/DeleteTransactionService';
-// import ImportTransactionsService from '../services/ImportTransactionsService';
+import ImportTransactionsService from '../services/ImportTransactionsService';
+
+import uploadConfig from '../config/upload';
+
+const upload = multer(uploadConfig);
 
 const transactionsRouter = Router();
 
@@ -65,8 +69,14 @@ transactionsRouter.delete('/:id', async (request, response) => {
   }
 });
 
-transactionsRouter.post('/import', async (request, response) => {
-  // TODO
+transactionsRouter.post('/import', upload.single('file'), async (request, response) => {
+  //Importar arquivo csv -- Multer utilizado como mid.
+  const importTransactions = new ImportTransactionsService();
+
+  const transactions = await importTransactions.execute(request.file.path);
+  //Criar transações
+  //Retornar transações criadas
+  return response.json(transactions);
 });
 
 export default transactionsRouter;
